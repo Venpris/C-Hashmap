@@ -5,7 +5,11 @@
 HashMap make_map(int initial_size) {
     HashMap map;
 
-    map.entries = (char*)malloc(initial_size * sizeof(char));
+    map.entries = (char*)malloc(initial_size * sizeof(HashEntry*));
+
+    for (int i = 0; i < initial_size; i++) { // Initialize the array of entries with null values
+        map.entries[i] = NULL;
+    }
 
     map.size = 0;
     map.capacity = initial_size;
@@ -31,4 +35,22 @@ int hash(char* key) {
     }
 
     return value; // Need to take the modulus later, didn't do it in this function to allow for better refactoring later (dynamic resizing)
+}
+
+void put(HashMap* map, char* key, char* value) {
+    int index = hash(key) % capacity;
+
+    // Loop through the array until either an empty index is found or the end of the array is reached
+    while (map->entries[index] != '\0') {
+        if (map->entries[index] != NULL) {
+            index++;
+        } else {
+            map->entries[index] = malloc(sizeof(HashEntry));
+
+            // Make copies of the key and value strings
+            map->entries[index]->key = strdup(key);
+            map->entries[index]->value = strdup(value);
+            break;
+        }
+    }
 }
