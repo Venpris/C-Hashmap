@@ -6,7 +6,7 @@ this project, I'm hoping to deepen my understanding of data structures
 and how they function on a lower level.
 
 UPDATES:
-    10/3/2023: This is the start. I actually found out earlier that my
+    - 10/3/2023: This is the start. I actually found out earlier that my
     understanding of hashmaps on a fundamental level is spotty, at best.
     After spending a lot of time researching, I feel much more confident
     that I can finish this project. For now, I simply want some way to
@@ -14,7 +14,7 @@ UPDATES:
     functioning key/value pairs, then I'll go from there with the
     remaining functions (put, remove, etc etc.)
 
-    10/8/2023: I'm now able to create and hash a hash table, which is
+    - 10/8/2023: I'm now able to create and hash a hash table, which is
     pretty good. The put function still isn't fully working yet, but I'm
     planning on getting that sorted out soon. I wrote some unit tests
     (for the first time in C as well!) and now I want to use the
