@@ -4,7 +4,7 @@ typedef struct {
     } HashEntry;
 
 typedef struct {
-    HashEntry* entries;
+    HashEntry** entries;
     int size;
     int capacity;
     } HashMap;
@@ -39,4 +39,4 @@ void put(HashMap* map, char* key, char* value);
 
 char* get(HashMap* map, char* key);
 
-void remove(HashMap* map, char* key);
+void map_remove(HashMap* map, char* key);

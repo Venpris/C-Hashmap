@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hashmap.h"
 
 HashMap make_map(int initial_size) {
     HashMap map;
 
-    map.entries = (char*)malloc(initial_size * sizeof(HashEntry*));
+    map.entries = (HashEntry**)malloc(initial_size * sizeof(HashEntry*));
 
     for (int i = 0; i < initial_size; i++) { // Initialize the array of entries with null values
         map.entries[i] = NULL;
@@ -38,7 +39,7 @@ int hash(char* key) {
 }
 
 void put(HashMap* map, char* key, char* value) {
-    int index = hash(key) % capacity;
+    int index = hash(key) % map->capacity;
 
     // Loop through the array until either an empty index is found or the end of the array is reached
     while (map->entries[index] != '\0') {
