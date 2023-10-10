@@ -54,6 +54,24 @@ void test_get() {
     TEST_ASSERT_EQUAL_STRING(get(&map, &key), value);
 }
 
+void test_map_remove() {
+    HashMap map = make_map(10);
+
+    Key key = { "key", -1 };
+    char* value = "value";
+
+    put(&map, &key, value);
+    int index = key.index;
+
+    HashMap map2 = make_map(10);
+    map_remove(&map2, &key); // should print the error message
+
+    map_remove(&map, &key);
+
+    TEST_ASSERT_NULL(map.entries[index]);
+    TEST_ASSERT_EQUAL_INT(-1, key.index);
+}
+
 int main(void) {
     UnityBegin("test_hashmap.c");
 
@@ -61,6 +79,7 @@ int main(void) {
     RUN_TEST(test_hash);
     RUN_TEST(test_put);
     RUN_TEST(test_get);
+    RUN_TEST(test_map_remove);
 
     return UnityEnd();
 }

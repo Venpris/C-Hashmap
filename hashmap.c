@@ -78,3 +78,17 @@ char* get(HashMap* map, Key* key) {
         return map->entries[key->index]->value;
     }
 }
+
+void map_remove(HashMap* map, Key* key) {
+    if (key->index == -1 || map->entries[key->index] == NULL) {
+        fprintf(stderr, "Key-value pair does not exist in the map.\n");
+    } else {
+        // Free memory
+        free(map->entries[key->index]->key);
+        free(map->entries[key->index]->value);
+        
+        // Reset values
+        map->entries[key->index] = NULL;
+        key->index = -1;
+    }
+}
