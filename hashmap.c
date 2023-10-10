@@ -27,7 +27,7 @@ int hash(char* key) {
         unsigned int group = 0;
 
         for (int i = 0; i < group_size && *key; i++) {
-            group = (group << 8) + *key; // Bitwise shift left by 8 (int is 8 bits).
+            group = (group << 8) + *key; // Bitwise shift left by 8 (char is 8 bits).
             // ^^ This is creating essentially a binary ASCII representation of the string, which can be modded by capacity to get an index
             key++;
         }
@@ -40,18 +40,29 @@ int hash(char* key) {
 
 void put(HashMap* map, char* key, char* value) {
     int index = hash(key) % map->capacity;
+    int i = index;
 
-    // Loop through the array until either an empty index is found or the end of the array is reached
-    while (map->entries[index] != '\0') {
-        if (map->entries[index] != NULL) {
-            index++;
-        } else {
-            map->entries[index] = malloc(sizeof(HashEntry));
+    // Loop through the array until either an empty index is found or array is full
+    do {
+        // Check if spot is empty or occupying key is the same
+        if (map->entries[i] == NULL || strcmp(map->entries[i]->key, key) == 0) {
+            if (map->entries[i] == NULL) {
+                map->entries[i] = malloc(sizeof(HashEntry));
 
-            // Make copies of the key and value strings
-            map->entries[index]->key = strdup(key);
+                // Make copies of the key and value strings and insert at the index
+                map->entries[i]->key = strdup(key);
+                map->entries[i]->value = strdup(value);
+            } else { // Replace existing value
+                free(map->entries[i]->value);
+            }
+
+            // Set new value
             map->entries[index]->value = strdup(value);
-            break;
+            return;
         }
-    }
+
+        i = (i + 1) % map->capacity;
+    } while (i != index); // Allows to wrap back around when end of array is reached
+
+    fprintf(stderr, "Map is full.\n");
 }
