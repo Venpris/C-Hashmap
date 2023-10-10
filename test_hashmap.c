@@ -35,15 +35,23 @@ void test_put() {
 
     int index = hash(key.text) % map.capacity;
 
-    if (map.entries[index] != NULL) {
-        printf("Key at index %d: %s\n", index, map.entries[index]->key->text);
-    } else {
-        printf("Entry at index %d is NULL\n", index);
-    }
-
     TEST_ASSERT_NOT_NULL(map.entries[index]);
     TEST_ASSERT_EQUAL_STRING(key.text, map.entries[index]->key->text);
     TEST_ASSERT_EQUAL_STRING(value, map.entries[index]->value);
+}
+
+void test_get() {
+    HashMap map = make_map(10);
+
+    Key key = { "key", -1 };
+    char* value = "value";
+
+    put(&map, &key, value);
+
+    HashMap map2 = make_map(10);
+    TEST_ASSERT_NULL(get(&map2, &key)); // null because key has not been inserted into this map
+
+    TEST_ASSERT_EQUAL_STRING(get(&map, &key), value);
 }
 
 int main(void) {
@@ -52,6 +60,7 @@ int main(void) {
     RUN_TEST(test_make_map);
     RUN_TEST(test_hash);
     RUN_TEST(test_put);
+    RUN_TEST(test_get);
 
     return UnityEnd();
 }

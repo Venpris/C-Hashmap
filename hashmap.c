@@ -48,16 +48,18 @@ void put(HashMap* map, Key* key, char* value) {
         if (map->entries[i] == NULL || strcmp(map->entries[i]->key->text, key->text) == 0) {
             if (map->entries[i] == NULL) {
                 map->entries[i] = malloc(sizeof(HashEntry));
+                map->entries[i]->key = malloc(sizeof(Key)); // Allocate memory for key inside entry
 
                 // Make copies of the key and value strings and insert at the index
                 map->entries[i]->key->text = strdup(key->text);
                 map->entries[i]->value = strdup(value);
             } else { // Replace existing value
                 free(map->entries[i]->value);
+
+                // Set new value
+                map->entries[i]->value = strdup(value);
             }
 
-            // Set new value
-            map->entries[i]->value = strdup(value);
             key->index = i; // Set key index to value at which key-value pair was inserted
             return;
         }
@@ -68,12 +70,11 @@ void put(HashMap* map, Key* key, char* value) {
     fprintf(stderr, "Map is full.\n");
 }
 
-// IN PROCESS
-
-/*char* get(HashMap* map, Key* key) {
-    if (key->index == NULL) {
+char* get(HashMap* map, Key* key) {
+    if (key->index == -1 || map->entries[key->index] == NULL) {
         fprintf(stderr, "Key-value pair does not exist in the map.\n");
+        return NULL;
     } else {
         return map->entries[key->index]->value;
     }
-}*/
+}
