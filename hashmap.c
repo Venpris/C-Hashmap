@@ -38,26 +38,27 @@ int hash(char* key) {
     return value; // Need to take the modulus later, didn't do it in this function to allow for better refactoring later (dynamic resizing)
 }
 
-void put(HashMap* map, char* key, char* value) {
-    int index = hash(key) % map->capacity;
+void put(HashMap* map, Key* key, char* value) {
+    int index = hash(key->text) % map->capacity;
     int i = index;
 
     // Loop through the array until either an empty index is found or array is full
     do {
         // Check if spot is empty or occupying key is the same
-        if (map->entries[i] == NULL || strcmp(map->entries[i]->key, key) == 0) {
+        if (map->entries[i] == NULL || strcmp(map->entries[i]->key->text, key->text) == 0) {
             if (map->entries[i] == NULL) {
                 map->entries[i] = malloc(sizeof(HashEntry));
 
                 // Make copies of the key and value strings and insert at the index
-                map->entries[i]->key = strdup(key);
+                map->entries[i]->key->text = strdup(key->text);
                 map->entries[i]->value = strdup(value);
             } else { // Replace existing value
                 free(map->entries[i]->value);
             }
 
             // Set new value
-            map->entries[index]->value = strdup(value);
+            map->entries[i]->value = strdup(value);
+            key->index = i; // Set key index to value at which key-value pair was inserted
             return;
         }
 
@@ -66,3 +67,13 @@ void put(HashMap* map, char* key, char* value) {
 
     fprintf(stderr, "Map is full.\n");
 }
+
+// IN PROCESS
+
+/*char* get(HashMap* map, Key* key) {
+    if (key->index == NULL) {
+        fprintf(stderr, "Key-value pair does not exist in the map.\n");
+    } else {
+        return map->entries[key->index]->value;
+    }
+}*/

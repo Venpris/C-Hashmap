@@ -28,21 +28,21 @@ void test_hash() {
 void test_put() {
     HashMap map = make_map(10);
 
-    char* key = "key";
+    Key key = { "key", -1 };
     char* value = "value";
 
-    put(&map, key, value);
+    put(&map, &key, value);
 
-    int index = hash(key) % map.capacity;
+    int index = hash(key.text) % map.capacity;
 
     if (map.entries[index] != NULL) {
-        printf("Key at index %d: %s\n", index, map.entries[index]->key);
+        printf("Key at index %d: %s\n", index, map.entries[index]->key->text);
     } else {
         printf("Entry at index %d is NULL\n", index);
     }
 
     TEST_ASSERT_NOT_NULL(map.entries[index]);
-    TEST_ASSERT_EQUAL_STRING(key, map.entries[index]->key);
+    TEST_ASSERT_EQUAL_STRING(key.text, map.entries[index]->key->text);
     TEST_ASSERT_EQUAL_STRING(value, map.entries[index]->value);
 }
 

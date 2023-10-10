@@ -1,5 +1,10 @@
 typedef struct {
-    char* key;
+    char* text; // Initialize to NULL
+    int index; // The index where the key-value pair lies in the array, initialize to -1
+} Key;
+
+typedef struct {
+    Key* key;
     char* value;
     } HashEntry;
 
@@ -21,7 +26,7 @@ HashMap make_map(int initial_size);
 /*
 * Creates a value using a hashing function involving the ASCII values of the key string.
 *
-* @param key The key for which the hash value is generated. Must be a string.
+* @param key The key for which the hash value is generated. Passed as a string.
 *
 * @return A hash value that can be modded with the capacity of the map to create
 *         an index at which the key-value pair can be inserted.
@@ -35,8 +40,16 @@ int hash(char* key);
 * @param key The key in the key-value pair.
 * @param value The value in the key-value pair.
 */
-void put(HashMap* map, char* key, char* value);
+void put(HashMap* map, Key* key, char* value);
 
-char* get(HashMap* map, char* key);
+/*
+* Retrieves the value associated with a specified key.
+*
+* @param map A pointer to the map containing the value associated with the key.
+* @param key The key in the key-value pair.
+*
+* @return The value associated with the specified key in the map.
+*/
+char* get(HashMap* map, Key* key);
 
-void map_remove(HashMap* map, char* key);
+void map_remove(HashMap* map, Key* key);
