@@ -59,3 +59,10 @@ char* get(HashMap* map, Key* key);
 * @param key The key in the specified key-value pair.
 */
 void map_remove(HashMap* map, Key* key);
+
+/*
+* Frees all memory allocated for the map and its entries, to be used when exiting the program or when the hashmap is no longer being used.
+*
+* @param map The map that memory has been allocated for.
+*/
+void free_map(HashMap* map);

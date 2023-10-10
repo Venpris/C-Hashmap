@@ -72,6 +72,21 @@ void test_map_remove() {
     TEST_ASSERT_EQUAL_INT(-1, key.index);
 }
 
+void test_free_map() {
+    HashMap map = make_map(10);
+
+    Key key = { "key", -1 };
+    Key key2 = { "ababa", -1 };
+
+    char* value = "value";
+    char* value2 = "zxzxz";
+
+    put(&map, &key, value);
+    put(&map, &key2, value2);
+
+    free_map(&map); // Just make sure there are no segfaults or other issues when running this function
+}
+
 int main(void) {
     UnityBegin("test_hashmap.c");
 
@@ -80,6 +95,7 @@ int main(void) {
     RUN_TEST(test_put);
     RUN_TEST(test_get);
     RUN_TEST(test_map_remove);
+    RUN_TEST(test_free_map);
 
     return UnityEnd();
 }

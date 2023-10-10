@@ -60,6 +60,7 @@ void put(HashMap* map, Key* key, char* value) {
                 map->entries[i]->value = strdup(value);
             }
 
+            map->size++; // Increment size
             key->index = i; // Set key index to value at which key-value pair was inserted
             return;
         }
@@ -87,8 +88,21 @@ void map_remove(HashMap* map, Key* key) {
         free(map->entries[key->index]->key);
         free(map->entries[key->index]->value);
         
-        // Reset values
+        // Reset values and decrement size
         map->entries[key->index] = NULL;
+        map->size--;
         key->index = -1;
     }
+}
+
+void free_map(HashMap* map) {
+    // Free entries
+    for (int i = 0; i < map->capacity; i++) {
+        if (map->entries[i] != NULL) {
+            free(map->entries[i]->key);
+            free(map->entries[i]->value);
+        }
+    }
+
+    free(map);
 }
