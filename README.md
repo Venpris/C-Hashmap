@@ -10,9 +10,10 @@ UPDATES:
 
 - 10/8/2023: I'm now able to create and hash a hash table, which is pretty good. The put function still isn't fully working yet, but I'm planning on getting that sorted out soon. I wrote some unit tests (for the first time in C as well!) and now I want to use the debugger to hopefully get all 3 tests passing, but I'm still having a little trouble setting that up.
 
+- 10/9/2023: Finally fixed the code for the put function. I struggled for a while to implement the get function today (segmentation faults during testing) but eventually managed it. I also realized that I needed a structure for the keys in order to maintain O(1) time complexity (or rather it was the easiest way to do so without needing to call the hash function and retrieve an index in every other API function), so I had the key structure store an integer representing the index where the key-value pair was stored in the map. I spent some time rewriting all of my code to work with this change, but I think it was worth it as it makes other functions (such as get) much easier to implement.
+
 TODO:
-    - Make tests pass
-    - Start on remaining API functions
+    - Finish/write tests for remaining API functions
 
 In the future I'm hoping to add more features to this hashmap, such as:
 - Dynamic sizing
