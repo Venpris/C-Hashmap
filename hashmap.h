@@ -52,4 +52,10 @@ void put(HashMap* map, Key* key, char* value);
 */
 char* get(HashMap* map, Key* key);
 
+/*
+* Removes a specified key-value pair from the map.
+*
+* @param map The map containing the specified key-value pair.
+* @param key The key in the specified key-value pair.
+*/
 void map_remove(HashMap* map, Key* key);
