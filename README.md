@@ -12,8 +12,10 @@ UPDATES:
 
 - 10/9/2023: Finally fixed the code for the put function. I struggled for a while to implement the get function today (segmentation faults during testing) but eventually managed it. I also realized that I needed a structure for the keys in order to maintain O(1) time complexity (or rather it was the easiest way to do so without needing to call the hash function and retrieve an index in every other API function), so I had the key structure store an integer representing the index where the key-value pair was stored in the map. I spent some time rewriting all of my code to work with this change, but I think it was worth it as it makes other functions (such as get) much easier to implement.
 
+- 10/10/2023: Finished a simple implementation of the map! For now, it just works with strings and only supports basic API functions. I might come back at a later date to implement the changes below.
+
 TODO:
-    - Finish/write tests for remaining API functions
+    - 
 
 In the future I'm hoping to add more features to this hashmap, such as:
 - Dynamic sizing
